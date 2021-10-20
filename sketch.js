@@ -1,93 +1,3 @@
-class Circulo {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
-  pintar() {
-    fill(200, 200, 0);
-    circle(this.x, this.y, 50);
-  }
-
-  validarClick(destX, destY) {
-    if (dist(this.x, this.y, destX, destY) <= 25) {
-      return true;
-    }
-    return false;
-  }
-
-  arrastrar(destX, destY) {
-    this.x = destX;
-    this.y = destY;
-  }
-}
-
-class Triangulo {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
-  pintar() {
-    fill(200, 200, 0);
-    triangle(this.x - 25, this.y + 18, this.x + 25, this.y + 18, this.x, this.y - 20);
-  }
-  validarClick(destX, destY) {
-    if (dist(this.x, this.y, destX, destY) <= 25) {
-      return true;
-    }
-    return false;
-  }
-
-  arrastrar(destX, destY) {
-    this.x = destX;
-    this.y = destY;
-  }
-}
-
-class Cuadrado {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
-  pintar() {
-    fill(200, 200, 0);
-    rectMode(CENTER);
-    rect(this.x, this.y, 50, 50);
-    rectMode(CORNER);
-  }
-  validarClick(destX, destY) {
-    if (dist(this.x, this.y, destX, destY) <= 25) {
-      return true;
-    }
-    return false;
-  }
-
-  arrastrar(destX, destY) {
-    this.x = destX;
-    this.y = destY;
-  }
-}
-
-class Rombo {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
-  pintar() {
-    fill(200, 200, 0);
-    quad(this.x, this.y - 25, this.x + 25, this.y, this.x, this.y + 25, this.x - 25, this.y);
-  }
-  validarClick(destX, destY) {
-    if (dist(this.x, this.y, destX, destY) <= 25) {
-      return true;
-    }
-    return false;
-  }
-  arrastrar(destX, destY) {
-    this.x = destX;
-    this.y = destY;
-  }
-}
-
 class Contenedor {
   constructor(x, y, tipo) {
     this.x = x;
@@ -147,8 +57,15 @@ class Contenedor {
   }
 
   cambiarEstado(res){
-    this.estado = res===true?1:2;
-    console.log(this.estado);
+    //this.estado = res === true ? 1 : 2;
+    
+    if (res === true) {
+      this.estado = 1;
+    }else{
+      this.estado = 2;
+    }
+
+    //console.log(this.estado);
   }
 
   dibujarEstado(){
@@ -161,6 +78,7 @@ class Contenedor {
     }
     rect(this.x+10, this.y+10, 180, 180);
     strokeWeight(1);
+    stroke(0);      
   }
 }
 
@@ -169,12 +87,20 @@ let circulo, triangulo, cuadrado, rombo;
 let selector;
 let contenedorA, contenedorB, contenedorC, contenedorD;
 
+let figuras = [];
+
 function setup() {
   createCanvas(400, 400);
   circulo = new Circulo(50, 100);
   triangulo = new Triangulo(120, 100);
   cuadrado = new Cuadrado(220, 100);
   rombo = new Rombo(340, 100);
+
+  figuras.push(circulo);
+  figuras.push(triangulo);
+  figuras.push(cuadrado);
+  figuras.push(rombo);
+
   selector = null;
   contenedorA = new Contenedor(0, 0, 0);
   contenedorB = new Contenedor(200, 0, 1);
@@ -184,10 +110,15 @@ function setup() {
 
 function draw() {
   background(220);
-  circulo.pintar();
-  triangulo.pintar();
-  cuadrado.pintar();
-  rombo.pintar();
+
+  for (let i = 0 ; i < figuras.length ; i++){
+    figuras[i].pintar();
+  }
+
+  //circulo.pintar();
+  //triangulo.pintar();
+  //cuadrado.pintar();
+  //rombo.pintar();
   contenedorA.pintar();
   contenedorB.pintar();
   contenedorC.pintar();
